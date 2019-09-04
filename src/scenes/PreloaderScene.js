@@ -5,6 +5,11 @@ export default class PreloaderScene extends Phaser.Scene {
     super('Preloader');
   }
 
+  // built in method, called first - before preload
+  init() {
+    this.readyCount = 0;
+  }
+
   preload() {
 
     // use fluid positioning for asset placement
@@ -90,7 +95,15 @@ export default class PreloaderScene extends Phaser.Scene {
         assetText.destroy();
         percentText.destroy();
         loadingText.destroy();
+
+        this.ready();
     });
+
+    // time event for logo display
+    // num millis, function to call, array of args to pass, scope
+    this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
+
+
 
 
 
@@ -123,9 +136,16 @@ export default class PreloaderScene extends Phaser.Scene {
 
   }
 
-  create() {
-    //this.scene.start('Game');
+  ready() {
+      // called once after phaser has loaded all our assets
+      // called again by the timedEvent which allows our logo
+      // to stay on screen minimum x milliseconds
+    this.readyCount++;
+    if(this.readyCount == 2) {
+        this.scene.start('Game');
+    }
   }
+
 }
 
 
