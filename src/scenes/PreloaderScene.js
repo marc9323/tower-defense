@@ -12,7 +12,20 @@ export default class PreloaderScene extends Phaser.Scene {
 
   preload() {
 
-    // use fluid positioning for asset placement
+    this.createPreloader();
+
+    // TODO: update delay
+
+    // time event for logo display
+    // num millis, function to call, array of args to pass, scope
+    this.timedEvent = this.time.delayedCall(1000, this.ready, [], this);
+
+    this.loadAssets();
+
+  }
+
+  createPreloader() {
+        // use fluid positioning for asset placement
     // and sizing of game, base off main cameras width/height
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
@@ -98,42 +111,35 @@ export default class PreloaderScene extends Phaser.Scene {
 
         this.ready();
     });
+  }
 
-    // time event for logo display
-    // num millis, function to call, array of args to pass, scope
-    this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
-
-
-
-
-
-      // load asset images
-    this.load.image('logo', 'assets/logo.png');
-    this.load.image('bullet', 'assets/level/bulletDark2_outline.png');
-    this.load.image('tower', 'assets/level/tank_bigRed.png');
-    this.load.image('enemy', 'assets/level/tank_sand.png');
-    this.load.image('base', 'assets/level/tankBody_darkLarge_outline.png');
-    this.load.image('title', 'assets/ui/title.png');
-    this.load.image('cursor', 'assets/ui/cursor.png');
-    this.load.image('blueButton1', 'assets/ui/blue_button02.png');
-    this.load.image('blueButton2', 'assets/ui/blue_button03.png');
-
-    // placeholder 
-    this.load.image('logo2', 'assets/logo.png');
-
-    // for testing progress bar
-    // for(var i = 0; i < 500; i++) {
-    //     this.load.image('logo2'+i, 'assets/logo.png');
-    // }
-
-    // load asset tilemap in JSON format
-    this.load.tilemapTiledJSON('level1', 'assets/level/level1.json');
-    // this key needs to match that used in Tiled
-    this.load.spritesheet('terrainTiles_default', 'assets/level/terrainTiles_default.png', {
-        frameWidth: 64,
-        frameHeight: 64
-    });
-
+  loadAssets() {
+        // load asset images
+        this.load.image('logo', 'assets/logo.png');
+        this.load.image('bullet', 'assets/level/bulletDark2_outline.png');
+        this.load.image('tower', 'assets/level/tank_bigRed.png');
+        this.load.image('enemy', 'assets/level/tank_sand.png');
+        this.load.image('base', 'assets/level/tankBody_darkLarge_outline.png');
+        this.load.image('title', 'assets/ui/title.png');
+        this.load.image('cursor', 'assets/ui/cursor.png');
+        this.load.image('blueButton1', 'assets/ui/blue_button02.png');
+        this.load.image('blueButton2', 'assets/ui/blue_button03.png');
+    
+        // placeholder 
+        this.load.image('logo2', 'assets/logo.png');
+    
+        // for testing progress bar
+        // for(var i = 0; i < 500; i++) {
+        //     this.load.image('logo2'+i, 'assets/logo.png');
+        // }
+    
+        // load asset tilemap in JSON format
+        this.load.tilemapTiledJSON('level1', 'assets/level/level1.json');
+        // this key needs to match that used in Tiled
+        this.load.spritesheet('terrainTiles_default', 'assets/level/terrainTiles_default.png', {
+            frameWidth: 64,
+            frameHeight: 64
+        });
   }
 
   ready() {
