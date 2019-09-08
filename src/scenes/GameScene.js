@@ -32,7 +32,14 @@ export default class GameScene extends Phaser.Scene {
     this.enemies = this.physics.add.group({
       classType: Enemy,
       runChildUpdate: true
-    })
+    });
+
+    this.turrets = this.add.group({
+      classType: this.turrets,
+      runChildUpdate: true
+    });
+
+    this.input.on('pointerdown', this.placeTurret, this);
   }
 
   createCursor() {
@@ -88,11 +95,31 @@ export default class GameScene extends Phaser.Scene {
   }
 
   getEnemy(){
-
+    return false;
   }
 
   addBullet() {
 
+  }
+
+  placeTurret(pointer) {
+    var i = Math.floor(pointer.y / 64);
+    var j = Math.floor(pointer.x / 64);
+
+    if(this.canPlaceTurret(i, j)) {
+      var turret = this.turrets.getFirstDead();
+      if(!turret) {
+        // create a new turret
+        turret = new Turret(this, 0, 0, this.map);
+        this.turrets.add(turret);
+      }
+      turret.setActive(true);
+      turret.setVisible(true);
+      turret.place(i, j);
+
+      // TODO: limit number of turret placements
+      
+    }
   }
 
   update(time, delta){
