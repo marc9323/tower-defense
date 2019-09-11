@@ -97,6 +97,17 @@ export default class GameScene extends Phaser.Scene {
 
   getEnemy(x, y, distance){
     var enemyUnits = this.enemies.getChildren();
+    for(var i = 0; i < enemyUnits.length; i++) {
+      // is enemy still active?
+
+      // check distance between enemy and turret 
+      // is it within 'distance' if then return enemy
+      if(enemyUnits[i].active && 
+        Phaser.Math.Distance.Between(x, y, enemyUnits[i].x, enemyUnits[i].y) <= distance){
+          return enemyUnits[i];
+        }
+    }
+    return false;
   }
 
   addBullet() {
