@@ -43,6 +43,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createCursor() {
+    // start in upper right hand corner
     this.cursor = this.add.image(32, 32, 'cursor');
     this.cursor.setScale(2);
     this.cursor.alpha = 0;
@@ -56,7 +57,7 @@ export default class GameScene extends Phaser.Scene {
       if(this.canPlaceTurret(i, j)) {
         // update cursor
         // add 32 to center it so cursor is around the full cell
-        this.cursor.setPosition(j * 64 + 32, i * 64 + 32);
+        this.cursor.setPosition(j * 64 + 32, i * 64 + 32); // +32 as scaled to 2
         this.cursor.alpha = 0.8;
       } else {
         this.cursor.alpha = 0;
@@ -94,8 +95,8 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(480, 480, 'base');
   }
 
-  getEnemy(){
-    return false;
+  getEnemy(x, y, distance){
+    var enemyUnits = this.enemies.getChildren();
   }
 
   addBullet() {
